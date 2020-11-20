@@ -1,0 +1,60 @@
+// In this challenge, we practice calculating the interquartile range. //
+
+#include <cmath>
+#include <cstdio>
+#include <vector>
+#include <iostream>
+#include <algorithm>
+#include <iomanip>
+using namespace std;
+
+
+int main() {
+    /* Enter your code here. Read input from STDIN. Print output to STDOUT */  
+    int input, size;
+    cin >> size;
+    vector<int> elements, frequencies;
+    for(int i = 0; i < size; i++){
+        cin >> input;
+        elements.push_back(input);
+    } 
+    for(int i = 0; i < size; i++){
+        cin >> input; 
+        frequencies.push_back(input);
+    }
+    vector<int> finalVector;
+    int curr = 0;
+    for(int i = 0; i < size; i++){
+        curr = frequencies[i];
+        for(int j = 0; j < curr; j++){
+            finalVector.push_back(elements[i]);
+        }
+    }
+    std::sort(finalVector.begin(), finalVector.end());
+    vector<int> lowerHalf, upperHalf;
+    if(finalVector.size() % 2 != 0){
+        for(long unsigned i = 0; i < finalVector.size() / 2; i++){
+            lowerHalf.push_back(finalVector[i]);
+        }
+        for(long unsigned i = finalVector.size(); i > finalVector.size() / 2; i--){
+            upperHalf.push_back(finalVector[i]);
+        }
+    } else {
+        for(long unsigned i = 0; i < finalVector.size() / 2; i++){
+            lowerHalf.push_back(finalVector[i]);
+        }
+        for(long unsigned i = finalVector.size(); i > finalVector.size() / 2; i--){
+            upperHalf.push_back(finalVector[i]);
+        }
+    }
+    float interquartile = 0;
+    if(lowerHalf.size() % 2 != 0) {
+        interquartile = upperHalf[upperHalf.size()/2] - lowerHalf[lowerHalf.size()/2];
+    } else {
+        float upper = (upperHalf[upperHalf.size()/2] + upperHalf[(upperHalf.size()/2)-1])/2;
+        float lower = (lowerHalf[lowerHalf.size()/2] + lowerHalf[(lowerHalf.size()/2)-1])/2;
+        interquartile = upper - lower;
+    }
+    cout << fixed << setprecision(1) << interquartile;
+    return 0;
+}
