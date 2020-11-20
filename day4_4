@@ -1,0 +1,26 @@
+// In this challenge, we go further with geometric distributions. //
+
+#include <cmath>
+#include <cstdio>
+#include <vector>
+#include <iostream>
+#include <algorithm>
+#include <iomanip>
+using namespace std;
+
+float geometric(int n, float p, float q){
+    return pow(q, n-1) * p;
+}
+
+int main() {
+    /* Enter your code here. Read input from STDIN. Print output to STDOUT */   
+    float p = 1.0f/3.0f;
+    float q = 1 - p;
+    int n = 5;
+    float totalProb = 0.0f;
+    for(int i = n; i > 0; i--){
+        totalProb += geometric(i, p, q);
+    }
+    cout << fixed << setprecision(3) << totalProb;
+    return 0;
+}
