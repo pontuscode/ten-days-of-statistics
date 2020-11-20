@@ -1,0 +1,31 @@
+#include <cmath>
+#include <cstdio>
+#include <vector>
+#include <iostream>
+#include <algorithm>
+#include <iomanip>
+using namespace std;
+
+
+int main() {
+    /* Enter your code here. Read input from STDIN. Print output to STDOUT */ 
+    int size, inputValue, inputs;
+    vector<int> elements;
+    vector<int> weights;
+    cin >> size;
+    for(int i = 0; i < size; i++){
+        cin >> inputValue;
+        elements.push_back(inputValue);
+    }
+    for(int i = 0; i < size; i++){
+        cin >> inputValue;
+        weights.push_back(inputValue);
+    }
+    float numerator, denominator;
+    for(int i = 0; i < size; i++){
+        numerator += elements[i] * weights[i];
+        denominator += weights[i];
+    }
+    cout << fixed << setprecision(1) << numerator / denominator;
+    return 0;
+}
