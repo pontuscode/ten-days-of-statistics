@@ -1,0 +1,52 @@
+// In this challenge, we practice calculating quartiles. //
+
+#include <cmath>
+#include <cstdio>
+#include <vector>
+#include <iostream>
+#include <algorithm>
+using namespace std;
+
+int main() {
+    /* Enter your code here. Read input from STDIN. Print output to STDOUT */   
+    
+    vector<int> v; 
+    int input;
+    int size;
+    cin >> size;
+    while(cin >> input){
+        v.push_back(input);
+    }
+    std::sort(v.begin(), v.end());
+    float q1, q2, q3;
+    if(size % 2 != 0) {
+        q2 = v[floor(size / 2)];
+    } else {
+        int upper = v[size / 2];
+        int lower = v[(v.size()/2) - 1];
+        q2 = (upper + lower) / 2;
+    }
+    vector<int> lowerHalf, upperHalf;
+    for(int i = 0; i < size; i++){
+        if(i < (size / 2)){
+            lowerHalf.push_back(v[i]);
+        } else if(i > (size / 2)) {
+            upperHalf.push_back(v[i]);
+        } else if(size % 2 == 0){
+            upperHalf.push_back(v[i]);
+        }
+    }
+    if(lowerHalf.size() % 2 != 0){
+        q1 = lowerHalf[floor(lowerHalf.size() / 2)];
+        q3 = upperHalf[floor(upperHalf.size() / 2)];
+    } else {
+        int upper = lowerHalf[lowerHalf.size() / 2];
+        int lower = lowerHalf[(lowerHalf.size() / 2) - 1];
+        q1 = (upper + lower) / 2;
+        upper = upperHalf[upperHalf.size() / 2];
+        lower = upperHalf[(upperHalf.size() / 2) - 1];
+        q3 = (upper + lower) / 2;
+    }
+    cout << q1 << endl << q2 << endl << q3 << endl;
+    return 0;
+}
