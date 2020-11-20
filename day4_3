@@ -1,0 +1,22 @@
+// In this challenge, we learn about geometric distributions. //
+
+#include <cmath>
+#include <cstdio>
+#include <vector>
+#include <iostream>
+#include <algorithm>
+#include <iomanip>
+using namespace std;
+
+float geometric(int n,float p,float q) {
+    return pow(q, n-1) * p;
+}
+
+int main() {
+    /* Enter your code here. Read input from STDIN. Print output to STDOUT */ 
+    double p = 1.0f/3.0f;
+    double q = 1.0f - p;
+    int n = 5;  
+    cout << fixed << setprecision(3) << geometric(n, p, q);
+    return 0;
+}
