@@ -1,0 +1,28 @@
+// In this challenge, we practice calculating standard deviation. //
+
+#include <cmath>
+#include <cstdio>
+#include <vector>
+#include <iostream>
+#include <algorithm>
+using namespace std;
+
+
+int main() {
+    /* Enter your code here. Read input from STDIN. Print output to STDOUT */  
+    int size, input, sum;
+    cin >> size;
+    vector<int> v;
+    while(cin >> input) {
+        v.push_back(input);
+        sum += input;
+    } 
+    float mean = sum / size;
+    float denominator;
+    for(int i = 0; i < size; i++){
+        denominator += pow((v[i] - mean), 2);
+    }
+    float sigma = (sqrt(denominator / size));
+    cout << sigma;
+    return 0;
+}
