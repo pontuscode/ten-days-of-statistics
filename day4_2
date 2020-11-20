@@ -1,0 +1,36 @@
+// In this challenge, we go further with binomial distributions. //
+
+#include <cmath>
+#include <cstdio>
+#include <vector>
+#include <iostream>
+#include <algorithm>
+#include <iomanip>
+using namespace std;
+
+int factorial(int n){
+    if(n == 0){
+        return 1;
+    } else {
+        return n * factorial(n - 1);
+    }
+}
+
+float combination(int r){
+    return(factorial(10) / (factorial(r) * factorial(10 - r)));
+}
+
+int main() {
+    float rejects = 0.12;
+    float nonRejects = 1 - rejects;
+    int batchSize = 10;
+    float totalProbability = 0.0;
+    for(int i = batchSize; i >= 2; i--){
+        totalProbability += combination(i) * pow(rejects, i) * pow(nonRejects, 10-i);
+    }
+    float temp = combination(2) * pow(rejects, 2) * pow(nonRejects, 8);
+    float secondProb = temp + 1 - totalProbability;
+    cout << fixed << setprecision(3) << secondProb << endl << fixed << setprecision(3) << totalProbability;
+    return 0;
+    
+}
