@@ -1,0 +1,31 @@
+// In this challenge, we learn about binomial distributions. //
+
+#include <cmath>
+#include <cstdio>
+#include <vector>
+#include <iostream>
+#include <algorithm>
+#include <iomanip>
+using namespace std;
+
+int factorial(int n){
+    if(n == 0){
+        return 1;
+    } else{
+        return n * factorial(n - 1);
+    }
+}
+float combination(int r) {
+    return(factorial(6) / (factorial(r)*factorial(6 - r)));
+}
+
+int main(){
+    float boyRatio = 1.09 / (1.09 + 1);
+    float girlRatio = 1 - boyRatio;
+    float totalProbability = 0.0;
+    
+    for(int i = 6; i >= 3; i--){
+        totalProbability += combination(i) * pow(boyRatio, i)*pow(girlRatio, 6-i);
+    }
+    cout << fixed << setprecision(3) << totalProbability;
+}
