@@ -1,3 +1,5 @@
+// In this challenge, we practice calculating a weighted mean. //
+
 #include <cmath>
 #include <cstdio>
 #include <vector>
