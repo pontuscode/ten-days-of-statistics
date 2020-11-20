@@ -1,0 +1,64 @@
+#include <cmath>
+#include <cstdio>
+#include <vector>
+#include <iostream>
+#include <algorithm>
+#include <map>
+
+using namespace std;
+
+float meanValue(std::vector<int> v) {
+    float sum = 0;
+    for(long unsigned i = 0; i < v.size(); i++){
+        sum += v[i];
+    }
+    return (sum / v.size());
+}
+
+float medianValue(std::vector<int> v) {
+    float median = 0;
+    std::sort(v.begin(), v.end());
+    if(v.size() % 2 == 0){
+        int middleHigher = (v.size() / 2);
+        int middleLower = middleHigher - 1;
+        float sum = v[middleLower] + v[middleHigher];
+        return sum / 2;
+    } else {
+        median = v[v.size()/2];
+        return median;
+    }
+    return -1;
+}
+
+float modeValue(std::vector<int> v){
+    map<int, int> modeMap;
+    for(long unsigned i = 0; i < v.size(); i++){
+        modeMap[v[i]]++;
+    }
+    int currMaxValue, currMaxAmount = 0; 
+    std::sort(v.begin(), v.end());
+    for(auto it = modeMap.begin(); it != modeMap.end(); ++it){
+        if(it -> first == v[0]) {
+            currMaxValue = it -> first;
+        }
+        if((it -> second) > currMaxAmount && (it -> first >= v[0])) {
+            currMaxAmount = it -> second;
+            currMaxValue = it -> first;
+        }
+    }
+    return currMaxValue;
+}
+int main() {
+    /* Enter your code here. Read input from STDIN. Print output to STDOUT */   
+    int size, value;
+    cin >> size;
+    vector<int> v;
+    while(cin >> value){
+        v.push_back(value);
+    }
+    float mean = meanValue(v);
+    float median = medianValue(v);
+    int mode = modeValue(v);
+    cout << mean << endl << median << endl << mode << endl;
+    return 0;
+}
