@@ -1,0 +1,54 @@
+// In this challenge, we go further with normal distributions. //
+
+#include <cmath>
+#include <cstdio>
+#include <vector>
+#include <iostream>
+#include <algorithm>
+#include <iomanip>
+using namespace std;
+
+//Credit for erf: https://introcs.cs.princeton.edu/java/21function/ErrorFunction.java.html
+float errorFunction(float z) {
+
+        double t = 1.0 / (1.0 + 0.5 * abs(z));
+
+        // use Horner's method
+        double ans = 1 - t * exp( -z*z   -   1.26551223 +
+                                            t * ( 1.00002368 +
+                                            t * ( 0.37409196 + 
+                                            t * ( 0.09678418 + 
+                                            t * (-0.18628806 + 
+                                            t * ( 0.27886807 + 
+                                            t * (-1.13520398 + 
+                                            t * ( 1.48851587 + 
+                                            t * (-0.82215223 + 
+                                            t * ( 0.17087277))))))))));
+        if (z >= 0) return  ans;
+        else        return -ans;
+}
+
+float normal(float x, float stdDev, float mean){
+    return 0.5*(1 + (errorFunction((x-mean)/(stdDev*sqrt(2)))));
+}
+int main() {
+    /* Enter your code here. Read input from STDIN. Print output to STDOUT
+    There are three lines of output. 
+    On the first line, print the answer to question grade >= 80
+    (i.e., the percentage of students having grade >= 80).
+    On the second line, print the answer to question grade >= 60
+    (i.e., the percentage of students having grade >= 60).
+    On the third line, print the answer to question <= 60
+    (i.e., the percentage of students having grade <= 60).
+    */
+    const int mean = 70;
+    const int stdDev = 10;
+    const int var = pow(stdDev, 2); 
+    float probability1 = 1 - normal(80, stdDev, mean);
+    float probability2 = 1 - normal(60, stdDev, mean);
+    float probability3 = 1 - probability2;
+    // Multiply with 100 to get percentages
+    cout << fixed << setprecision(2) << 100*probability1 << endl
+         << 100*probability2 << endl << 100*probability3;
+    return 0;
+}
