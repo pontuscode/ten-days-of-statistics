@@ -1,0 +1,54 @@
+//n this challenge, we learn about normal distributions. //
+
+#include <cmath>
+#include <cstdio>
+#include <vector>
+#include <iostream>
+#include <algorithm>
+#include <iomanip>
+
+using namespace std;
+
+//Credit for erf: https://introcs.cs.princeton.edu/java/21function/ErrorFunction.java.html
+float errorFunction(float z) {
+
+        double t = 1.0 / (1.0 + 0.5 * abs(z));
+
+        // use Horner's method
+        double ans = 1 - t * exp( -z*z   -   1.26551223 +
+                                            t * ( 1.00002368 +
+                                            t * ( 0.37409196 + 
+                                            t * ( 0.09678418 + 
+                                            t * (-0.18628806 + 
+                                            t * ( 0.27886807 + 
+                                            t * (-1.13520398 + 
+                                            t * ( 1.48851587 + 
+                                            t * (-0.82215223 + 
+                                            t * ( 0.17087277))))))))));
+        if (z >= 0) return  ans;
+        else        return -ans;
+}
+
+float normal(float x, float stdDev, float mean){
+    return 0.5*(1 + (errorFunction((x-mean)/(stdDev*sqrt(2)))));
+}
+
+int main() {
+    /* Enter your code here. Read input from STDIN. Print output to STDOUT */   
+    //Between 20 and 22 hours?
+    
+    const float mean = 20; // Mean in the plant is 20 hours
+    const float stdDev = 2; // Standard deviation in the plant is 2 hours
+    const float var = pow(stdDev, 2); // Variance is the standard deviation squared
+    const float e = 2.71828;
+    const float pi = 3.141592;
+    //Probability of assembly time < 19.5 hours?
+    float probability1 = normal(19.5, stdDev, mean);
+    //Probability of assembly time between 20 and 22 hours?
+    //Cumulative distribution = F(B) - F(A) where B = 22 and A = 20 and F = normal()
+    float B = normal(22, stdDev, mean);
+    float A = normal(20, stdDev, mean);
+    float probability2 = B - A;
+    cout << fixed << setprecision(3) << probability1 << endl << probability2;
+    return 0;
+}
