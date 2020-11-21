@@ -1,0 +1,49 @@
+#include <cmath>
+#include <cstdio>
+#include <vector>
+#include <iostream>
+#include <algorithm>
+#include <iomanip>
+using namespace std;
+
+//Credit for erf: https://introcs.cs.princeton.edu/java/21function/ErrorFunction.java.html
+float errorFunction(float z) {
+
+        double t = 1.0 / (1.0 + 0.5 * abs(z));
+
+        // use Horner's method
+        double ans = 1 - t * exp( -z*z   -   1.26551223 +
+                                            t * ( 1.00002368 +
+                                            t * ( 0.37409196 + 
+                                            t * ( 0.09678418 + 
+                                            t * (-0.18628806 + 
+                                            t * ( 0.27886807 + 
+                                            t * (-1.13520398 + 
+                                            t * ( 1.48851587 + 
+                                            t * (-0.82215223 + 
+                                            t * ( 0.17087277))))))))));
+        if (z >= 0) return  ans;
+        else        return -ans;
+}
+
+float normal(float x, float stdDev, float mean){
+    float Z = (x-mean) / stdDev;
+    return 0.5*(1 + (errorFunction((Z/(sqrt(2))))));
+}
+
+int main() {
+    /* Enter your code here. Read input from STDIN. Print output to STDOUT */  
+    const int maxWeight = 9800; 
+    const int n = 49;
+    const int mean = 205;
+    const int stdDev = 15;
+    // When n > 30 we can use central limit theorem.
+    // For large n, the distribution of sample sums is close to normal distribution  where meanPrime = n * mean, and sigmaPrime = sqrt(n) * sigma: 
+    float meanPrime = n * mean;
+    float sigmaPrime = sqrt(n) * stdDev;
+    // Print the probability that the eleveator can successfully transport all 49 boxes. 
+    
+    float probability = normal(maxWeight, sigmaPrime, meanPrime);
+    cout << fixed << setprecision(4) << probability;
+    return 0;
+}
