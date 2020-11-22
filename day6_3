@@ -1,0 +1,33 @@
+//In this challenge, we practice solving problems based on the Central Limit Theorem.//
+
+#include <cmath>
+#include <cstdio>
+#include <vector>
+#include <iostream>
+#include <algorithm>
+#include <iomanip>
+using namespace std;
+
+float const errorFunction(const float stdDev, const float zScore, const int population)
+{
+    float stdErr = stdDev/sqrt(population);
+    return stdErr*zScore;
+}
+
+int main() {
+    /* Enter your code here. Read input from STDIN. Print output to STDOUT
+       You have a sample of 100 values from a population with mean 500 and with standard deviation 80. 
+       Compute the interval that covers the middle of the 95% distribution of the sample mean; in other words, compute A and B such that P(A < x < B)=0.95. 
+       Use the z-value of 1.96. */
+
+    const int mean = 500;
+    const int stdDev = 80;
+    const float zScore = 1.96;
+    const int population = 100;
+
+    float lowerSum = mean - errorFunction(stdDev, zScore, population);
+    float higherSum = mean + errorFunction(stdDev, zScore, population);
+
+    cout << fixed << setprecision(2) << lowerSum << endl << higherSum;
+    return 0;
+}
