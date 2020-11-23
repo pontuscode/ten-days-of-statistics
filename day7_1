@@ -1,0 +1,54 @@
+//In this challenge, we practice calculating the Pearson correlation coefficient.//
+
+#include <cmath>
+#include <cstdio>
+#include <vector>
+#include <iostream>
+#include <algorithm>
+#include <iomanip>
+using namespace std;
+
+float covariance(vector<float> x, vector<float> y, float meanX, float meanY){
+    float cov = 0.0f;
+    for(long unsigned i = 0; i < x.size(); i++){
+        cov += ((x[i] - meanX) * (y[i] - meanY));
+    }
+    return (cov / x.size());
+}
+
+float stdDev(vector<float> v, float mean){
+    float denominator = 0.0f;
+    for(long unsigned i = 0; i < v.size(); i++){
+        denominator += pow((v[i] - mean), 2);
+    }
+    return (sqrt(denominator / v.size()));
+}
+
+
+int main() {
+    /* Enter your code here. Read input from STDIN. Print output to STDOUT */
+    int n = 0;
+    vector<float> x;
+    vector<float> y;
+    float curr, meanX, meanY, sumX, sumY = 0.0f;
+    cin >> n;
+    for(int i = 0; i < n; i++){
+        cin >> curr;
+        x.push_back(curr);
+        sumX += curr;
+    }
+    for(int i = 0; i < n; i++){
+        cin >> curr;
+        y.push_back(curr);
+        sumY += curr;
+    }
+    meanX = sumX / x.size();
+    meanY = sumY / y.size();
+    float stdDevX = stdDev(x, meanX);
+    float stdDevY = stdDev(y, meanY);
+    float cov = covariance(x,y,meanX, meanY);
+    float pearsonCoef = cov / (stdDevX * stdDevY);
+    
+    cout << fixed << setprecision(3) << pearsonCoef; 
+    return 0;
+}
