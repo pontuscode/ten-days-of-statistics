@@ -1,0 +1,54 @@
+//In this challenge, we practice using linear regression techniques.//
+
+#include <cmath>
+#include <cstdio>
+#include <vector>
+#include <iostream>
+#include <algorithm>
+#include <iomanip>
+using namespace std;
+
+/* If our data shows a linear relationship between X and Y , then the straight line which best describes the relationship is the regression line. The regression line is given by yHat = a + bX. */
+
+float getValueB(vector<std::pair<int,int>> v){
+    long unsigned n = v.size();
+    float xiyiProductSum, xSum, ySum, xSquaredSum = 0.0f;
+    //v.first -> x, v.second -> y§
+    for(int i = 0; i < n; i++){
+        xiyiProductSum += (v[i].first * v[i].second);
+        xSum += v[i].first;
+        ySum += v[i].second;
+        xSquaredSum += pow(v[i].first, 2);
+    }
+    float B = ((n*(xiyiProductSum)-((xSum)*(ySum)))/((n*xSquaredSum)-pow(xSum, 2)));
+    return B;
+}
+
+float getValueA(vector<std::pair<int,int>> v, float B){
+    long unsigned n = v.size();
+    float xMean, yMean = 0.0f;
+    int xSum, ySum = 0;
+    for(int i = 0; i < n; i++){
+        xSum += v[i].first;
+        ySum += v[i].second;
+    }
+    xMean = xSum / n;
+    yMean = ySum / n;
+    float A = yMean - (xMean * B);
+    return A;
+}
+
+
+int main() {
+    /* Enter your code here. Read input from STDIN. Print output to STDOUT */
+    std::vector<std::pair<int,int>> xyGrades;
+    int x,y = 0;
+    while(cin >> x >> y){
+        xyGrades.push_back(make_pair(x,y));
+    }   
+    float B = getValueB(xyGrades);
+    float A = getValueA(xyGrades, B);
+    float expectedGrade = B * 80.0f + A;
+    cout << fixed << setprecision(3) << expectedGrade;    
+    return 0;
+}
